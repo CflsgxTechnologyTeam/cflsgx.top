@@ -1,5 +1,5 @@
 ///
-/// Future Imperfect by HTML5 UP
+/// Massively by HTML5 UP
 /// html5up.net | @ajlkn
 /// Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 ///
@@ -7,81 +7,109 @@
 /* Intro */
 
 	#intro {
-		.logo {
-			border-bottom: 0;
-			display: inline-block;
-			margin: 0 0 (_size(element-margin) * 0.5) 0;
-			overflow: hidden;
-			position: relative;
-			width: 4em;
+		@include color-typography(invert);
+		@include color-button(invert);
+		@include padding(_size(padding) * 4, _size(padding) * 2);
+		@include vendor('align-items', 'center');
+		@include vendor('display', 'flex');
+		@include vendor('flex-direction', 'column');
+		@include vendor('justify-content', 'flex-end');
+		@include vendor('transition', (
+			'opacity 1s ease',
+			'transform 1s ease'
+		));
+		position: relative;
+		cursor: default;
+		text-align: center;
+		z-index: 1;
+		min-height: 100vh;
 
-			&:before {
-				background-image: svg-url('<svg xmlns="http://www.w3.org/2000/svg" width="100px" height="100px" viewBox="0 0 100 100" preserveAspectRatio="none" zoomAndPan="disable"><polygon points="0,0 100,0 100,25 50,0 0,25" style="fill:#{_palette(bg-alt)}" /><polygon points="0,100 100,100 100,75 50,100 0,75"  style="fill:#{_palette(bg-alt)}" /></svg>');
-				background-position: top left;
-				background-repeat: no-repeat;
-				background-size: 100% 100%;
-				content: '';
-				display: block;
-				height: 100%;
-				left: 0;
-				position: absolute;
-				top: 0;
-				width: 100%;
-			}
+		h1 {
+			font-size: 5rem;
+			line-height: 1;
+		}
 
-			img {
-				display: block;
-				margin-left: -0.25em;
-				width: 4.5em;
+		p {
+			font-size: 1.25rem;
+			font-style: italic;
+			margin-top: -0.25rem;
+			text-align: center;
+		}
+
+		& + #header {
+			margin-top: -20rem;
+
+			.logo {
+				@include vendor('transform', 'translateY(2rem)');
+				opacity: 0;
+				visibility: hidden;
 			}
 		}
 
-		header {
-			h2 {
-				font-size: 2em;
-				font-weight: _font(weight-heading-extrabold);
+		&.hidden {
+			@include vendor('pointer-events', 'none');
+			@include vendor('transform', 'translateY(2rem)');
+			@include vendor('transition', (
+				'opacity 0.5s ease',
+				'transform 0.5s ease',
+				'visibility 0.5s'
+			));
+			opacity: 0;
+			visibility: hidden;
+
+			& + #header {
+				.logo {
+					@include vendor('transform', 'translateY(0)');
+					opacity: 1;
+					visibility: visible;
+				}
 			}
+		}
+
+		body.is-preload & {
+			@include vendor('transform', 'translateY(2rem)');
+			opacity: 0;
+
+			&:not(.hidden) {
+				& + #header + #nav {
+					@include vendor('transform', 'translateY(4rem)');
+					opacity: 0;
+				}
+			}
+		}
+
+		@include breakpoint('<=medium') {
+			@include padding(_size(padding) * 2, _size(padding) * 2);
+			min-height: 90vh;
 
 			p {
-				font-size: 0.8em;
+				br {
+					display: none;
+				}
 			}
-		}
 
-		@include breakpoint('<=large') {
-			margin: 0 0 _size(section-spacing) 0;
-			text-align: center;
-
-			header {
-				h2 {
-					font-size: 2em;
-				}
-
-				p {
-					font-size: 0.7em;
-				}
+			& + #header {
+				margin-top: -14rem;
 			}
 		}
 
 		@include breakpoint('<=small') {
-			margin: 0 0 _size(section-spacing-small) 0;
-			padding: 1.25em 0;
+			@include padding(_size(padding) * 1.5, _size(padding) * 1);
+			min-height: 80vh;
 
-			> :last-child {
-				margin-bottom: 0;
+			h1 {
+				font-size: 3.25rem;
+				line-height: 1.1;
+				margin-bottom: _size(element-margin) * 0.5;
 			}
 
-			.logo {
-				margin: 0 0 (_size(element-margin) * 0.25) 0;
+			p {
+				font-size: 1rem;
+				margin-top: 0rem;
 			}
 
-			header {
-				h2 {
-					font-size: 1.25em;
-				}
-
-				> :last-child {
-					margin-bottom: 0;
-				}
+			.actions {
+				display: none;
 			}
 		}
 	}
