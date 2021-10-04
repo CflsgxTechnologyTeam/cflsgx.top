@@ -1,1 +1,1 @@
-## hi！这里是CFLSGX学生会官网（在建ing...）
+## hi！这里是CFLSGX团学会官网（在建ing...）
