@@ -16,13 +16,11 @@ const ROUTES_LIST = [
 		title: "CFLSGX团学会_成都外国语学校高新校区团学会",
 		description: "",
 	},
-	{},
 ];
 
 ROUTES_LIST.forEach(({ path, view, ...attrs }) => {
 	router.get(path, function (req, res, next) {
 		res.type("html");
-		console.log({ attrs });
 		res.render(view, { ...attrs });
 	});
 });
