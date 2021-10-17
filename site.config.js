@@ -9,5 +9,11 @@ module.exports = {
 			title: "首页",
 			description: "",
 		},
+        {
+			path: "/about",
+			view: "about",
+			title: "关于",
+			description: "",
+		}
 	],
 };

@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
-const { seo } = require("./site.config");
 
 const router = express.Router();
 const SITE_CONFIG = require("./site.config");

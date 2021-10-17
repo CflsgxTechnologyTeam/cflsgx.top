@@ -11,12 +11,19 @@ const SITE_CONFIG = require("../site.config.js");
 const ROOT_PATH = process.cwd();
 const EXPORT_PATH = "docs";
 
+var target_dir = path.join(ROOT_PATH, EXPORT_PATH);
+
+if (!fs.existsSync(target_dir)) {
+	fs.mkdirSync(target_dir);
+} else {
+	fs.rmdirSync(target_dir, { recursive: true });
+}
+
 SITE_CONFIG.routes_list.forEach((route) => {
 	let template = fs.readFileSync(
 		path.join(process.cwd(), `/views/${route.view}.ejs`),
 		"utf8"
 	);
-	let target_dir = path.join(ROOT_PATH, EXPORT_PATH);
 	let renderedPage = ejs.render(
 		template,
 		{
@@ -24,16 +31,14 @@ SITE_CONFIG.routes_list.forEach((route) => {
 			seo: SITE_CONFIG.seo,
 		},
 		{
-			views: [ROOT_PATH],
+			views: [path.join(ROOT_PATH, "/views")],
 		}
 	);
-	if (!fs.existsSync(target_dir)) {
-		fs.mkdirSync(target_dir);
-	} else {
-		fs.rmdirSync(target_dir, { recursive: true });
-	}
-	fs.writeFileSync(
-		`${path.join(ROOT_PATH, EXPORT_PATH, route.path)}/${route.view}.html`,
-		renderedPage
-	);
+
+	let writePath =
+		route.path === "/"
+			? path.join(ROOT_PATH, EXPORT_PATH, route.path, `index.html`)
+			: path.join(ROOT_PATH, EXPORT_PATH, `${route.path}.html`);
+
+	fs.writeFileSync(writePath, renderedPage);
 });
