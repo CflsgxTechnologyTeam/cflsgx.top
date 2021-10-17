@@ -2,18 +2,19 @@ const express = require("express");
 const app = express();
 const port = 3000;
 const path = require("path");
+const { seo } = require("./site.config");
 
 const router = express.Router();
-const ROUTES_LIST = require("./site.config").routes_list
+const SITE_CONFIG = require("./site.config");
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
 
-ROUTES_LIST.forEach(({ path, view, ...attrs }) => {
+SITE_CONFIG.routes_list.forEach(({ path, view, ...attrs }) => {
 	router.get(path, function (req, res, next) {
 		res.type("html");
-		res.render(view, { ...attrs });
+		res.render(view, { seo: SITE_CONFIG.seo, ...attrs });
 	});
 });
 
